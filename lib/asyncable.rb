@@ -45,13 +45,13 @@ module Asyncable
 
   def complete!
     self.status = Statuses::SUCCEEDED
-    self.save
+    save
     after_async_complete
   end
 
   def failed!(error)
     self.status = Statuses::FAILED
-    self.save
+    save
     handle_async_error(error)
   end
 

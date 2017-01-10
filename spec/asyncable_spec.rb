@@ -97,6 +97,52 @@ describe Asyncable do
     end
   end
 
+  describe 'private methods' do
+    describe '#process_in_background' do
+      subject { test_obj.send(:process_in_background) }
+
+      context 'without error' do
+        before(:each) do
+          allow(test_obj).to receive(:async_operation)
+          allow(test_obj).to receive(:complete!).and_return(true)
+        end
+
+        it { is_expected.to eq(true) }
+      end
+
+      context 'with error' do
+        let(:error) { 'boom' }
+
+        before(:each) do
+          allow(test_obj).to receive(:async_operation).and_raise('error')
+          allow(test_obj).to receive(:failed!).and_return(error)
+        end
+
+        it 'should call failed!' do
+          expect(subject).to eq(error)
+        end
+      end
+    end
+
+    describe 'complete!' do
+      subject { test_obj.send(:complete!) }
+
+      it 'should set status to completed' do
+        subject
+        expect(test_obj.status).to eq(Asyncable::Statuses::SUCCEEDED)
+      end
+    end
+
+    describe 'failed!' do
+      subject { test_obj.send(:failed!, nil) }
+
+      it 'should set status to failed' do
+        subject
+        expect(test_obj.status).to eq(Asyncable::Statuses::FAILED)
+      end
+    end
+  end
+
   it 'has a version number' do
     expect(Asyncable::VERSION).not_to be nil
   end
