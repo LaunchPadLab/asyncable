@@ -75,4 +75,4 @@ module Asyncable
   # === END HOOKS ===
 end
 
-require_relative './asyncable/active_support_scopes'
+require_relative './asyncable/active_record_scopes'
