@@ -1,4 +1,5 @@
-require "asyncable/version"
+require 'asyncable/version'
+require 'active_support/all'
 
 module Asyncable
   module Statuses
@@ -73,3 +74,5 @@ module Asyncable
   end
   # === END HOOKS ===
 end
+
+require_relative './asyncable/active_support_scopes'
