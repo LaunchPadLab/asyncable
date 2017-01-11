@@ -104,7 +104,7 @@ describe Asyncable do
       context 'without error' do
         before(:each) do
           allow(test_obj).to receive(:async_operation)
-          allow(test_obj).to receive(:complete!).and_return(true)
+          allow(test_obj).to receive(:async_complete!).and_return(true)
         end
 
         it { is_expected.to eq(true) }
@@ -124,8 +124,8 @@ describe Asyncable do
       end
     end
 
-    describe 'complete!' do
-      subject { test_obj.send(:complete!) }
+    describe 'async_complete!' do
+      subject { test_obj.send(:async_complete!) }
 
       it 'should set status to completed' do
         subject

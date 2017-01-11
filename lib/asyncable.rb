@@ -36,7 +36,7 @@ module Asyncable
   def process_in_background
     begin
       async_operation
-      complete!
+      async_complete!
     rescue Exception => e
       failed!(e)
     end
@@ -44,10 +44,14 @@ module Asyncable
   handle_asynchronously :process_in_background
 
 
-  def complete!
+  def async_complete!
+    success!
+    after_async_complete
+  end
+
+  def success!
     self.status = Statuses::SUCCEEDED
     save
-    after_async_complete
   end
 
   def failed!(error)
