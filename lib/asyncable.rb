@@ -15,7 +15,7 @@ module Asyncable
 
   def start_async
     self.status = Statuses::PROCESSING
-    save
+    save_to_db
     process_in_background
   end
 
@@ -33,6 +33,12 @@ module Asyncable
 
   private
 
+  # === INTERFACE METHODS ===
+  def async_operation
+    fail "async_operation method is required for #{self.class.name}"
+  end
+  # === END INTERFACE METHODS ===
+
   def process_in_background
     begin
       async_operation
@@ -43,7 +49,6 @@ module Asyncable
   end
   handle_asynchronously :process_in_background
 
-
   def async_complete!
     success!
     after_async_complete
@@ -51,26 +56,19 @@ module Asyncable
 
   def success!
     self.status = Statuses::SUCCEEDED
-    save
+    save_to_db
   end
 
   def failed!(error)
     self.status = Statuses::FAILED
-    save
+    save_to_db
     handle_async_error(error)
   end
 
-  # === INTERFACE ===
-  def async_operation
-    fail "async_operation method is required for #{self.class.name}"
-  end
-
-  def save
-    fail "save method is required for #{self.class.name}"
-  end
-  # === END INTERFACE ===
-
   # === HOOKS ===
+  def save_to_db
+  end
+
   def after_async_complete
   end
 

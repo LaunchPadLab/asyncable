@@ -127,6 +127,19 @@ describe Asyncable do
     describe 'async_complete!' do
       subject { test_obj.send(:async_complete!) }
 
+      before(:each) do
+        allow(test_obj).to receive(:success!)
+        allow(test_obj).to receive(:after_async_complete).and_return(true)
+      end
+
+      it 'should return true' do
+        expect(subject).to eq(true)
+      end
+    end
+
+    describe 'success!' do
+      subject { test_obj.send(:async_complete!) }
+
       it 'should set status to completed' do
         subject
         expect(test_obj.status).to eq(Asyncable::Statuses::SUCCEEDED)
