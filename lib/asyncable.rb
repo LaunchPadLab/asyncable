@@ -8,11 +8,6 @@ module Asyncable
     SUCCEEDED = 'succeeded'
   end
 
-  # # === CLASS HOOKS ===
-  # def self.async(method)
-  # end
-  # # === END CLASS HOOKS ===
-
   def start_async
     self.status = Statuses::PROCESSING
     save_to_db
@@ -47,7 +42,6 @@ module Asyncable
       failed!(e)
     end
   end
-  async :process_in_background
 
   def async_complete!
     success!
