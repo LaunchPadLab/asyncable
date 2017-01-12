@@ -8,10 +8,10 @@ module Asyncable
     SUCCEEDED = 'succeeded'
   end
 
-  # === CLASS HOOKS ===
-  def self.async(method)
-  end
-  # === END CLASS HOOKS ===
+  # # === CLASS HOOKS ===
+  # def self.async(method)
+  # end
+  # # === END CLASS HOOKS ===
 
   def start_async
     self.status = Statuses::PROCESSING
