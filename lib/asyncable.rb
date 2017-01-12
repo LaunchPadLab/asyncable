@@ -9,7 +9,7 @@ module Asyncable
   end
 
   # === CLASS HOOKS ===
-  def self.handle_asynchronously(method)
+  def self.async(method)
   end
   # === END CLASS HOOKS ===
 
@@ -47,7 +47,7 @@ module Asyncable
       failed!(e)
     end
   end
-  handle_asynchronously :process_in_background
+  async :process_in_background
 
   def async_complete!
     success!
